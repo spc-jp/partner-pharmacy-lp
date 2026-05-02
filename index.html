@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>機械で守る正確さ。アプリで届ける、やさしさ。｜TAKAZONO × SPC</title>
+<meta name="description" content="タカゾノ機器をお使いの調剤薬局さま限定。AIで患者対応・採用・経営の悩みを軽くする5つのアプリ。">
+<style>
+  :root {
+    --takazono-teal: #2EC4B6;
+    --takazono-deep: #1A9A94;
+    --takazono-pale: #E6F7F5;
+    --base-white: #FFFFFF;
+    --base-gray: #F4F6F7;
+    --text-charcoal: #2C3E50;
+    --text-sub: #6B7280;
+    --spc-blue: #225AD3;
+    --accent-gold: #E8B547;
+    --accent-gold-deep: #C99830;
+    --status-green: #06A77D;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    color: var(--text-charcoal);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    background: white;
+  }
+  /* Nav */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text-charcoal);
+  }
+  .nav-logo-mark {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--takazono-teal), var(--takazono-deep));
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .nav-links {
+    display: flex;
+    gap: 26px;
+    font-size: 13px;
+  }
+  .nav-links a {
+    color: var(--text-charcoal);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--takazono-teal); }
+  .nav-cta {
+    background: var(--takazono-deep);
+    color: white;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nav-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(26,154,148,0.3);
+  }
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2EC4B6 0%, #1A9A94 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 24px 80px;
+    color: white;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .hero-bg svg {
+    position: absolute;
+    width: 100%; height: 100%;
+    opacity: 0.07;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+    top: -200px; right: -150px;
+    pointer-events: none;
+  }
+  .hero-glow.bottom {
+    top: auto; right: auto;
+    bottom: -300px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,181,71,0.18), transparent 70%);
+  }
+  .hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    backdrop-filter: blur(6px);
+  }
+  .badge-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    box-shadow: 0 0 10px var(--accent-gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.3); }
+  }
+  .hero-title {
+    font-size: clamp(28px, 4.4vw, 52px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    margin-bottom: 24px;
+    color: white;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.1);
+  }
+  .hero-title .accent {
+    color: #FFEAA7;
+    position: relative;
+  }
+  .hero-title .accent::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -4px;
+    height: 4px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+  .hero-subtitle {
+    font-size: clamp(14px, 1.6vw, 17px);
+    line-height: 1.85;
+    margin-bottom: 36px;
+    color: rgba(255,255,255,0.95);
+    max-width: 540px;
+  }
+  .hero-subtitle strong {
+    color: #FFEAA7;
+    font-weight: 700;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 30px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all .25s;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-deep));
+    color: #1A3A4A;
+    box-shadow: 0 8px 24px rgba(232,181,71,0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(232,181,71,0.5);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.6);
+    backdrop-filter: blur(6px);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+  .hero-trust {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: rgba(255,255,255,0.92);
+  }
+  .hero-trust span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-trust .check {
+    width: 16px; height: 16px;
+    background: var(--accent-gold);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #1A3A4A;
+    font-size: 10px;
+    font-weight: 900;
+  }
+  /* Hero visual - tile mosaic */
+  .hero-right {
+    position: relative;
+    height: 480px;
+  }
+  .tile-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-3deg);
+  }
+  .tile {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: transform .4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tile.solid-1 { background: rgba(255,255,255,0.95); }
+  .tile.solid-2 { background: rgba(255,255,255,0.6); }
+  .tile.solid-3 { background: rgba(255,255,255,0.3); }
+  .tile.deep-1 { background: rgba(26,154,148,0.85); }
+  .tile.deep-2 { background: rgba(15,80,77,0.6); }
+  .tile.gold { background: linear-gradient(135deg, #E8B547, #C99830); }
+  .tile.transparent { background: transparent; }
+  .tile svg {
+    width: 50%; height: 50%;
+    opacity: 0.9;
+  }
+  .tile.solid-1 svg { color: #1A9A94; }
+  .tile.solid-2 svg, .tile.solid-3 svg { color: white; }
+  .tile.deep-1 svg, .tile.deep-2 svg { color: white; }
+  .tile.gold svg { color: white; }
+  .tile-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #1A9A94;
+  }
+  .tile.deep-1 .tile-label, .tile.deep-2 .tile-label { color: white; }
+  .tile-grid:hover .tile { transform: scale(0.97); }
+  .tile:hover { transform: scale(1.05) !important; }
+  /* Scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.85);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    z-index: 3;
+    cursor: pointer;
+  }
+  .scroll-hint .arrow {
+    display: block;
+    margin: 6px auto 0;
+    width: 22px; height: 22px;
+    border-right: 2px solid rgba(255,255,255,0.85);
+    border-bottom: 2px solid rgba(255,255,255,0.85);
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translate(0, 0); }
+    50% { transform: rotate(45deg) translate(4px, 4px); }
+  }
+  /* Next section preview */
+  .next-section {
+    background: var(--base-gray);
+    padding: 60px 24px 40px;
+    text-align: center;
+  }
+  .next-section h2 {
+    font-size: clamp(20px, 2.6vw, 28px);
+    color: var(--text-charcoal);
+    margin-bottom: 12px;
+  }
+  .next-section p {
+    color: var(--text-sub);
+    font-size: 14px;
+  }
+  /* Mobile */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .hero-right {
+      height: 320px;
+      order: -1;
+    }
+    .tile-grid { transform: rotate(-2deg); }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <span class="nav-logo-mark">T</span>
+        <span>TAKAZONO × SPC</span>
+      </div>
+      <div class="nav-links">
+        <a href="#apps">5アプリ</a>
+        <a href="#price">料金</a>
+        <a href="#case">事例</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a href="#contact" class="nav-cta">資料請求</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow bottom"></div>
+    <div class="hero-bg">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse">
+            <circle cx="3" cy="3" r="0.6" fill="white"/>
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#dots)"/>
+      </svg>
+    </div>
+
+    <div class="hero-container">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          タカゾノ販売パートナー限定
+        </div>
+        <h1 class="hero-title">
+          機械で守る正確さ。<br>
+          アプリで届ける、<span class="accent">やさしさ。</span>
+        </h1>
+        <p class="hero-subtitle">
+          タカゾノ機器をお使いの調剤薬局さま限定。<br>
+          AIで「患者対応・採用・経営」の悩みを軽くする<strong>5つのアプリ</strong>。
+        </p>
+        <div class="hero-cta">
+          <a href="#video" class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            30秒の動画で見る
+          </a>
+          <a href="#contact" class="btn btn-secondary">資料を受け取る</a>
+        </div>
+        <div class="hero-trust">
+          <span><span class="check">✓</span> 調剤薬局専用設計</span>
+          <span><span class="check">✓</span> IT導入補助金対応</span>
+          <span><span class="check">✓</span> 初期費用0円</span>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="tile-grid">
+          <div class="tile solid-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="6" width="16" height="12" rx="2"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="8" cy="9" r="0.5" fill="currentColor"/><circle cx="12" cy="9" r="0.5" fill="currentColor"/><circle cx="16" cy="9" r="0.5" fill="currentColor"/></svg>
+          </div>
+          <div class="tile deep-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
+          </div>
+          <div class="tile solid-2">
+            <span class="tile-label">COLD</span>
+          </div>
+          <div class="tile transparent"></div>
+
+          <div class="tile deep-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="8" rx="6" ry="3"/><path d="M6 8v6c0 1.7 2.7 3 6 3s6-1.3 6-3V8"/></svg>
+          </div>
+          <div class="tile solid-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+          </div>
+          <div class="tile gold">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8l-6.2 4.5 2.4-7.4L2 9.4h7.6L12 2z"/></svg>
+          </div>
+          <div class="tile solid-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          </div>
+
+          <div class="tile transparent"></div>
+          <div class="tile solid-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21v-2a3 3 0 00-2-2.8"/></svg>
+          </div>
+          <div class="tile deep-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="tile solid-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a5 5 0 0110-1 5 5 0 0110 1c0 5.5-7 10-7 10h-6z"/></svg>
+          </div>
+
+          <div class="tile solid-3">
+            <span class="tile-label">AI</span>
+          </div>
+          <div class="tile transparent"></div>
+          <div class="tile deep-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>
+          </div>
+          <div class="tile solid-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" onclick="document.getElementById('next').scrollIntoView({behavior:'smooth'})">
+      こんなお悩み、ありませんか？
+      <span class="arrow"></span>
+    </div>
+  </section>
+
+  <section id="next" class="next-section">
+    <h2>こんなお悩み、ありませんか？</h2>
+    <p>※ ここから先は次セクションを順次追加していきます</p>
+  </section>
+</body>
+</html>
